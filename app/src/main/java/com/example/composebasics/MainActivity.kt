@@ -3,7 +3,9 @@ package com.example.composebasics
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
@@ -18,32 +20,50 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            ComposeBasicsTheme {
-                // A surface container using the 'background' color from the theme
-                Surface(
-                    modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colors.background
-                ) {
-                    Greeting("Android")
-                }
+            ComposeBasicsTheme() {
+                MyApp(modifier = Modifier.fillMaxSize())
             }
         }
     }
 }
 
-
+@Composable
+private fun MyApp(modifier: Modifier = Modifier, names: List<String> = listOf("World", "Compose")
+) {
+    Surface(
+        modifier = modifier,
+        color = MaterialTheme.colors.background
+    ) {
+        Column(
+            modifier = modifier.padding(vertical = 4.dp)
+        ) {
+            for(name in names){
+                Greeting(name)
+            }
+        }
+    }
+}
 
 @Composable
 fun Greeting(name: String) {
-    Surface(color = MaterialTheme.colors.primary) {
-        Text(text = "Hello $name!", modifier = Modifier.padding(24.dp))
+    Surface(color = MaterialTheme.colors.primary,modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp)
+    ) {
+        Column(
+            modifier = Modifier
+                .padding(24.dp)
+                .fillMaxWidth(),
+
+        ) {
+            Text(text = "Hello,")
+            Text(text = name)
+        }
     }
 }
 
 @Preview(showBackground = true)
 @Composable
-fun DefaultPreview() {
+private fun DefaultPreview() {
     ComposeBasicsTheme {
-        Greeting("Android")
+        MyApp()
     }
 }
