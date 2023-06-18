@@ -3,9 +3,12 @@ package com.example.composebasics
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.animation.core.animateDpAsState
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -59,12 +62,13 @@ fun GreetingsComposable(modifier: Modifier = Modifier, names: List<String> = Lis
     }
 }
 @Composable
-fun Greeting(name: String) {
+fun Greeting(name: String,modifier: Modifier = Modifier) {
     val expanded = remember { mutableStateOf(false) }
 
-    val extraPadding = if (expanded.value) 48.dp else 0.dp
+    val extraPadding by animateDpAsState(if (expanded.value) 48.dp else 0.dp);
 
-    Surface(color = MaterialTheme.colors.primary,modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp)
+    Surface(color = MaterialTheme.colors.primary,modifier = modifier.padding(vertical = 4.dp, horizontal = 8.dp),
+        shape = RoundedCornerShape(12.dp)
     ) {
         Row(
             modifier = Modifier.padding(24.dp)
